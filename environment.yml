@@ -1,8 +1,10 @@
 #para instalar/crear el ambiente usar 'conda env create -f environment.yml'
 #entonces usar el comando 'conda activate lstmvisitas' para activarlo
 #remover un ambiente 'conda env remove --name lstmvisitas'
+#'python -m unittest'
 name: lstmvisitas
 dependencies:
   - scikit-learn
   - scipy
   - matplotlib
+  - pandas

@@ -1,4 +1,16 @@
-import service_logging
+import cargar_info
+import slices
+import sumar_lista
+import escalar_entre_m1_y_1
+import generar_lista_con_saltos
+import extraer_data_modelo_persistente
+import calcular_raiz_error_cuadratico_medio
 
-primes = [2,3,4,7,11,13]
-service_logging.obtenerLoggin().debug(type(primes))
+visitas_diarias=cargar_info.cargar_info("AnalyticsAllWebSiteDataVisióngeneraldelaaudiencia20141001-20200226.csv")
+slices_semanas= slices.obtener_slices_de_tamanio(lista_elementos=visitas_diarias,slice=7)
+semanas_sumarizadas=list(map(sumar_lista.sumar_lista,slices_semanas))
+min,max,semanas_estandarizadas = escalar_entre_m1_y_1.escalar_entre_m1_y_1(semanas_sumarizadas)
+semanas_previa_siguiente=generar_lista_con_saltos.generar_lista_con_saltos(tamanio_listas=2,salto_entre_elemento=7,lista=semanas_estandarizadas)
+y_pred,y_real=extraer_data_modelo_persistente.extraer_data_modelo_persistente(semanas_previa_siguiente)
+error_rmse=calcular_raiz_error_cuadratico_medio.calcular_raiz_error_cuadratico_medio(y_pred,y_real)
+print("el error rmse de referencia con el modelo persistente es "+str(error_rmse))

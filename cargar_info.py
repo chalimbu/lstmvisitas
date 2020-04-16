@@ -1,15 +1,23 @@
 from pandas import read_csv
 
-def cargar_info():
-    series = read_csv('recursos/Analytics All Web Site Data Visión general de la audiencia 20141001-20200226.csv', header=0, parse_dates=[0], index_col=0, squeeze=True, date_parser=parser)
-    #https://machinelearningmastery.com/time-series-forecasting-long-short-term-memory-network-python/
-    #https://www.google.com/search?client=firefox-b-d&q=lstm+tensor+flow
-    #https://www.tensorflow.org/api_docs/python/tf/keras/layers/LSTM
-    #https://www.tensorflow.org/guide/keras/rnn
-    #https://www.tensorflow.org/tutorials/structured_data/time_series
-    #https://www.google.com/search?newwindow=1&client=firefox-b-d&sxsrf=ALeKk02C-szJ7JvLL-H2DMRLvYRHwj-_1Q%3A1586957189208&ei=hQuXXvONDOeZ_Qbx24voDA&q=tf.keras.models.Sequential+loss&oq=tf.keras.models.Sequential+loss&gs_lcp=CgZwc3ktYWIQAzIECAAQRzIECAAQRzIECAAQRzIECAAQRzIECAAQRzIECAAQRzIECAAQRzIECAAQR0oJCBcSBTEyLTI5SggIGBIEMTItMlDMGljMGmCTHGgAcAJ4AIABAIgBAJIBAJgBAKABAaoBB2d3cy13aXo&sclient=psy-ab&ved=0ahUKEwiz5KScxOroAhXnTN8KHfHtAs0Q4dUDCAs&uact=5
-    #https://www.tensorflow.org/api_docs/python/tf/keras/Sequential
-    #https://www.tensorflow.org/api_docs/python/tf/keras/losses
-    #https://www.google.com/search?client=firefox-b-d&q=mean_squared_error
-    #https://www.google.com/search?client=firefox-b-d&q=read+csv+pandas
-    #https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html
+def cargar_info(file_name):
+    if type(file_name) not in [str]:
+        raise TypeError("se espera un string para el nombre del archivo")
+    ruta= "recursos/"+file_name
+    read= read_csv(ruta, dtype = {"Usuarios": str },usecols=['Usuarios'])
+    lista_individuales=list(map(lambda lista : lista[0],read.values))
+    conversion_analitics=list(map(convertir_numero_formato_analitics,lista_individuales))
+    return conversion_analitics
+
+def convertir_numero_formato_analitics(numero):
+    if type(numero) not in [str]:
+        raise TypeError("se espera un string para la conversion")
+    separados=numero.split(".")
+    if (len(separados) == 1):
+        return int(separados[0])
+    elif (len(separados) == 2):
+        multiplicador_segunda_parte=3-len(separados[1])
+        nuevo_numero=(int(separados[0])*1000)+(int(separados[1])*(10**multiplicador_segunda_parte))
+        return nuevo_numero
+    else:
+        raise ValueError("esta funcion solo soporte conversion hasta 999.999")
