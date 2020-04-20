@@ -8,3 +8,9 @@ dependencies:
   - scipy
   - matplotlib
   - pandas
+  - tensorflow
+  - numpy
+  - pip:
+      - pyyaml
+      - h5py
+
