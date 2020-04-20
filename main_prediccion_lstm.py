@@ -29,10 +29,10 @@ print("shape of x is"+str(y_entreno.shape))
 print("shape of x is"+str(x_pruebas.shape))
 print("shape of x is"+str(y_pruebas.shape))
 modelo_lstm=generar_modelo_lstm.generar_modelo_lstm(x_entreno)
-callback_guardar=callback_guardar.callback_guardar("modelos/modelo2/epoch2000")
+callback_guardar=callback_guardar.callback_guardar("modelos/modelo3/epoch1000")
 #cargar un modelo guardado
-checkpoint_path_charge = "modelos/modelo2/epoch1000"
-modelo_lstm.load_weights(checkpoint_path_charge)
+#checkpoint_path_charge = "modelos/modelo2/epoch1000"
+#modelo_lstm.load_weights(checkpoint_path_charge)
 modelo_entrenado=entrenar_modelo.entrenar_modelo(modelo=modelo_lstm,x_entreno=x_entreno,y_entreno=y_entreno,x_pruebas=x_pruebas,y_pruebas=y_pruebas,callbacks=[callback_guardar])
 #print(modelo_entrenado.history.keys()) ##dict_keys(['loss', 'val_loss'])
 print("loss"+str(modelo_entrenado.history['loss']))
