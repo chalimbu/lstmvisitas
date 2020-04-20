@@ -1,2 +1,2 @@
-model_checkpoint_path: "epoch50"
-all_model_checkpoint_paths: "epoch50"
+model_checkpoint_path: "epoch1000"
+all_model_checkpoint_paths: "epoch1000"
